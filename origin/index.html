@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/Hyphen.js"></script>
+  <script type="text/javascript" src="js/Parser.js"></script>
+  <script type="text/javascript" src="js/Helper.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    var parser = new Parser(".debug");
+    var post = data.posts[0];
+    var contents = post.contents;
+    
+    var html = '';
+    html += "<p class=\"title\">" + post.title + "</p>";
+    html += "<p class=\"meta_title\">" + post.orig_author + "</p>";
+    //处理段落
+    for(i=0; i<contents.length; i++){
+      var param = contents[i];
+      result = get_html(parser, 740, param);
+      if(result.content){
+        html += result.content;
+      }
+    }
+    //分页
+    $(".debug").html(html);
+    var obj = $(".debug")[0];
+    var pages = $(".switch_page");
+    var pageindex = 1;
+    var allpages = Math.ceil(parseInt(obj.scrollHeight)/parseInt(obj.offsetHeight));
+    pages.html("<center><b>共 " + allpages + " 页</b><a class=\"last\" href='#'>上一页</a>  <a class=\"next\" href='#'>下一页</a></center>");
+    $(".last").click(function(){
+      gotopage(-1);
+    });
+    $(".next").click(function(){
+      gotopage(1);
+    });
+    function gotopage(value){
+      try{
+        value=="-1"?showPage(pageindex-=1):showPage(pageindex+=1);
+      }catch(e){
+      }
+    }
+    function showPage(page_index){
+      $(".debug").animate({scrollTop:(page_index-1)*parseInt(obj.offsetHeight)-50}, 1000);
+      return false;
+    }
+  });
+  </script>
+  <script type="text/javascript">
+  WebFontConfig = {
+    custom: { families: [ 'headline','body'], urls: ['css/headline.css', 'css/body.css'] },
+    fontactive: function(fontname, n4){
+      var classes = '';
+      if(fontname == 'headline'){
+        classes = '.headline';
+      }else{
+        classes = '.paragraph';
+      }
+      $(classes).css("font-family", fontname);
+    },
+    fontinactive: function(fontname, n4){
+      var classes = '';
+      if(fontname == 'headline'){
+        classes = '.headline';
+      }else{
+        classes = '.paragraph';
+      }
+      $(classes).css("font-family", fontname);
+    }
+
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                  '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/format.css" >
+  <link rel="stylesheet" type="text/css" href="css/main.css" >
+  <style type="text/css">
+  .headline   { font-family: headline; }
+  .paragraph  { font-family: body; }
+  .wf-loading { font-family: serif; }
+
+  .debug { 
+    height: 1000px;
+    overflow-pageINdex:hidden; 
+    overflow-y:hidden; 
+  }
+  </style>
+</head>
+<body>
+<div class="switch_page" style="text-align:center;align:center;"></div>
+<div class="page">
+  <div class="bow">
+    <div class="debug"></div>
+    <div style="text-align:center"><a class="last" href='#'>上一页</a>  <a class="next" href='#'>下一页</a></div>
+  </div>
+</div>
+</body>
+</html>
