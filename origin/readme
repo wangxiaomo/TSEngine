@@ -1,0 +1,36 @@
+
+RenderEngine  ---- 中文排版 && WebFont Loader。
+
+├── css                                # CSS
+│   ├── body.css                       # WebFont Loader CSS. 此处为段落字体
+│   ├── format.css                     
+│   ├── format.less                    # 此处配合 json 中的 format 样式
+│   ├── headline.css                   # WebFont Loader CSS. 此处为 headline 样式
+│   ├── main.css                      
+│   └── main.less                      # 其余样式
+├── index.html                         # 首页.包含 WebFont Loader,Hyphen,分页等.
+├── js                                 # JS
+│   ├── data.js                        # 测试数据.此处为文本数据
+│   ├── Helper.coffee                  # Helper Functions
+│   ├── Helper.js
+│   ├── Hyphen.coffee                  # Hyphen 代码
+│   ├── Hyphen.js
+│   ├── jquery.js
+│   ├── less.js
+│   ├── Parser.coffee                  # Parser 代码
+│   └── Parser.js
+├── readme                             # readme doc
+├── scripts                            # SCRIPTS
+│   ├── A.ttf
+│   ├── B.ttf
+│   ├── data.js
+│   ├── generate_ttf.py                # 根据文本生成相应字体库 供 WebFont Loader 使用
+│   ├── to_json.py                     # 豆瓣读书 repr 数据转换 json 供页面使用
+│   ├── README.md                      # TTFRender Manual
+│   └── TTFRender                      # TTFRender 库 用来生成缩小的中文字体库
+├── static                             # 静态资源
+│   ├── A.ttf
+│   └── B.ttf
+└── webfont.html                       # WebFont 页面.之包含基本的 WebFont 不包括 WebFont Loader,分页
+
+6 directories, 25 files

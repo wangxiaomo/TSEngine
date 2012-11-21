@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/Hyphen.js"></script>
+  <script type="text/javascript" src="js/Parser.js"></script>
+  <script type="text/javascript" src="js/Helper.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    var parser = new Parser(".debug");
+    var title = data.title;
+    var contents = data.posts[0].contents;
+    $(".title").html(title);
+    
+    var html = '';
+    //处理段落
+    for(i=0; i<contents.length; i++){
+      var param = contents[i];
+      res = get_html(parser, 760, param);
+      if(res.content){
+        html += res.content;
+      }
+    }
+    $(".debug").html(html);
+  });
+  </script>
+  <script type="text/javascript">
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/format.css" >
+  <link rel="stylesheet" type="text/css" href="css/main.css" >
+  <style type="text/css">
+  @font-face{
+    font-family: 'headline';
+    src: url('./static/A.ttf');
+  }
+  @font-face{
+    font-family: 'body';
+    src: url('./static/B.ttf');
+  }
+  .headline { font-family: 'headline'; }
+  .paragraph { font-family: 'body'; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="bow">
+    <div class="title"></div>
+    <div class="debug"></div>
+  </div>
+</div>
+</body>
+</html>

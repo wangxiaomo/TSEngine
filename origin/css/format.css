@@ -1,0 +1,18 @@
+.p_center {
+  text-align: center;
+}
+.p_quote {
+  color: grey;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.p_bold {
+  font-weight: bold;
+}
