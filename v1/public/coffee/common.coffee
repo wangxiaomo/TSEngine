@@ -45,8 +45,11 @@ define 'common', ['jquery', 'utils', 'hyphen'], ($, utils, Hyphen)->
     }
 
   handle_punctuation = (text, start)->
-    PUNCTUATION = ',.，。:：!！>》、?？”'
-    while PUNCTUATION.indexOf(text[start]) != -1
+    HOME_PUNCTUATION_CHECK = ',.，。:：!！>》、?？’”'
+    END_PUNCTUATION_CHECK = '“‘<《'
+    while HOME_PUNCTUATION_CHECK.indexOf(text[start]) != -1
+      start = start-1
+    while END_PUNCTUATION_CHECK.indexOf(text[start-1]) != -1
       start = start-1
     return start
 

@@ -49,9 +49,13 @@
       };
     };
     handle_punctuation = function(text, start) {
-      var PUNCTUATION;
-      PUNCTUATION = ',.，。:：!！>》、?？”';
-      while (PUNCTUATION.indexOf(text[start]) !== -1) {
+      var END_PUNCTUATION_CHECK, HOME_PUNCTUATION_CHECK;
+      HOME_PUNCTUATION_CHECK = ',.，。:：!！>》、?？’”';
+      END_PUNCTUATION_CHECK = '“‘<《';
+      while (HOME_PUNCTUATION_CHECK.indexOf(text[start]) !== -1) {
+        start = start - 1;
+      }
+      while (END_PUNCTUATION_CHECK.indexOf(text[start - 1]) !== -1) {
         start = start - 1;
       }
       return start;
