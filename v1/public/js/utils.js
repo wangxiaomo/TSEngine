@@ -2,7 +2,7 @@
 (function() {
 
   define('utils', ['jquery'], function($) {
-    var get_dom_width;
+    var get_dom_width, is_enchar, preview_enchar_word;
     get_dom_width = function(word) {
       var p, r;
       p = document.createElement('p');
@@ -12,8 +12,25 @@
       $('#width-sample').remove();
       return r;
     };
+    is_enchar = function(char) {
+      if (('a' <= char && char <= 'z') || ('A' <= char && char <= 'Z')) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+    preview_enchar_word = function(text, start) {
+      var word;
+      word = '';
+      while (is_enchar(text[start])) {
+        word += text[start++];
+      }
+      return word;
+    };
     return {
-      get_dom_width: get_dom_width
+      get_dom_width: get_dom_width,
+      is_enchar: is_enchar,
+      preview_enchar_word: preview_enchar_word
     };
   });
 

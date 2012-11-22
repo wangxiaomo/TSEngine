@@ -7,6 +7,20 @@ define 'utils', ['jquery'], ($)->
     $('#width-sample').remove()
     return r
   
+  is_enchar = (char)->
+    if 'a'<=char<='z' or 'A'<=char<='Z'
+      return true
+    else
+      return false
+
+  preview_enchar_word = (text, start)->
+    word = ''
+    while is_enchar(text[start])
+      word += text[start++]
+    return word
+
   return {
     get_dom_width: get_dom_width
+    is_enchar: is_enchar
+    preview_enchar_word: preview_enchar_word
   }
