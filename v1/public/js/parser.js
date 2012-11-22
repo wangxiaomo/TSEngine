@@ -3,29 +3,39 @@
 
   define('parser', ['common', 'hyphen'], function(Common, Hyphen) {
     var parse;
-    parse = function(paragraph, width) {
-      var cnt_width, end, sentences, start, w, w_index, word_width, _ref, _ref1;
+    parse = function(text, width) {
+      var cnt_width, end, r, sentences, start, w, w_index, word_width, wrap_index, _ref, _ref1, _ref2, _ref3;
       if (width == null) {
         width = 320;
       }
-      if (paragraph.length > 10086) {
+      if (text.length > 10086) {
         return {
           status: -1,
           text: "大哥.太长了吧!~有木有搞错~~~(/= _ =)/~┴┴"
         };
       }
       sentences = Array();
-      _ref = [0, 0, 0], start = _ref[0], end = _ref[1], cnt_width = _ref[2];
-      for (w_index in paragraph) {
-        w = paragraph[end = w_index];
+      _ref = [0, 0, 0, 0], start = _ref[0], end = _ref[1], cnt_width = _ref[2], w_index = _ref[3];
+      while (w_index < text.length) {
+        r = Common.handle_hyphen(text, w_index, width - cnt_width);
+        if (r.status === 0) {
+          wrap_index = (_ref1 = r.wrap_index) != null ? _ref1 : 0;
+          sentences.push(text.slice(start, end = end + wrap_index + 1));
+          _ref2 = [end, 0], start = _ref2[0], cnt_width = _ref2[1];
+          w_index = end + 1;
+          continue;
+        }
+        w = text[end = w_index];
         word_width = Common.get_word_width(w);
         if (cnt_width + word_width > width) {
-          sentences.push(paragraph.slice(start, end));
-          _ref1 = [end, 0], start = _ref1[0], cnt_width = _ref1[1];
+          sentences.push(text.slice(start, end));
+          _ref3 = [end, 0], start = _ref3[0], cnt_width = _ref3[1];
         } else {
           cnt_width = cnt_width + word_width;
         }
+        w_index += 1;
       }
+      sentences.push(text.slice(start));
       return {
         status: 0,
         text: sentences.join('<br />')

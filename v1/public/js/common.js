@@ -21,22 +21,26 @@
     };
     handle_hyphen = function(text, start, residual_width) {
       var AVERAGE_WIDTH, end, points, possible_width, word;
-      AVERAGE_WIDTH = 8;
+      AVERAGE_WIDTH = 10;
+      residual_width = residual_width + AVERAGE_WIDTH;
       word = utils.preview_enchar_word(text, start);
       if (word.length > 0) {
         possible_width = word.length * AVERAGE_WIDTH;
         if (possible_width > residual_width) {
-          points = hyphen.hyphenate(word);
-          end = Math.floor(residual_width / AVERAGE_WIDTH);
-          while (end > 0) {
-            if (points[end] % 2 === 1) {
-              break;
+          if (word.length > hyphen.min_word) {
+            points = hyphen.hyphenate(word);
+            end = Math.floor(residual_width / AVERAGE_WIDTH);
+            while (end > 0) {
+              if (points[end] % 2 === 1) {
+                break;
+              }
+              end = end - 1;
             }
-            end = end - 1;
           }
           return {
             status: 0,
-            wrap_index: end
+            wrap_index: end,
+            word: word
           };
         }
       }

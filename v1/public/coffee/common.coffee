@@ -16,25 +16,30 @@ define 'common', ['jquery', 'utils', 'hyphen'], ($, utils, Hyphen)->
 
   handle_hyphen = (text, start, residual_width)->
     #
-    # TODO: 确认并整理思路
-    #
-    #
-    AVERAGE_WIDTH = 8
+    #: 设定字符平均宽度为8.然后得到单词大概长度,并和剩余宽度进行比较
+    #: 如果大于剩余宽度，说明中间涉及到断行！
+    #      如果单词小于最短 Hyphen 长度,则全部置于下一行
+    #      如果单词大于最短 Hyphen 长度,则查找何处 Hyphen. 假设可容忍的最大宽度为剩余宽度除以
+    #      8.然后从该处开始回溯，找到第一个断点进行段行，如果没有找到的话也全部置于下一行.
+    #: 如果小于剩余宽度，则不涉及到断行.
+    AVERAGE_WIDTH = 10
+    residual_width = residual_width+AVERAGE_WIDTH
     word = utils.preview_enchar_word(text, start)
     if word.length>0
       possible_width = word.length*AVERAGE_WIDTH
       if possible_width>residual_width
-        points = hyphen.hyphenate(word)
-        end = Math.floor(residual_width/AVERAGE_WIDTH)
-        while end>0
-          if points[end]%2 == 1
-            break
-          end = end-1
+        if word.length>hyphen.min_word
+          points = hyphen.hyphenate(word)
+          end = Math.floor(residual_width/AVERAGE_WIDTH)
+          while end>0
+            if points[end]%2 == 1
+              break
+            end = end-1
         return {
           status: 0
           wrap_index: end
+          word: word
         }
-
     return {
       status: -1
     }
