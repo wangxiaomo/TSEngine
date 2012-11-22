@@ -28,6 +28,7 @@
         w = text[end = w_index];
         word_width = Common.get_word_width(w);
         if (cnt_width + word_width > width) {
+          end = Common.handle_punctuation(text, end);
           sentences.push(text.slice(start, end));
           _ref3 = [end, 0], start = _ref3[0], cnt_width = _ref3[1];
         } else {
