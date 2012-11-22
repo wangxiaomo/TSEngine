@@ -22,12 +22,15 @@ define 'parser', ['common', 'hyphen'], (Common, Hyphen)->
       w = text[end = w_index]
       word_width = Common.get_word_width(w)
       if cnt_width+word_width>width
+        end = Common.handle_punctuation(text, end)
         sentences.push(text.slice(start, end))
-        [start, cnt_width] = [end, 0]
+        if w == '“'
+          w_index -= 2
+          continue
+        [cnt_width, start, w_index] = [0, end, end]
       else
         cnt_width = cnt_width+word_width
-
-      w_index += 1
+        w_index += 1
     sentences.push(text.slice(start))
     return {
       status: 0

@@ -28,12 +28,17 @@
         w = text[end = w_index];
         word_width = Common.get_word_width(w);
         if (cnt_width + word_width > width) {
+          end = Common.handle_punctuation(text, end);
           sentences.push(text.slice(start, end));
-          _ref3 = [end, 0], start = _ref3[0], cnt_width = _ref3[1];
+          if (w === '“') {
+            w_index -= 2;
+            continue;
+          }
+          _ref3 = [0, end, end], cnt_width = _ref3[0], start = _ref3[1], w_index = _ref3[2];
         } else {
           cnt_width = cnt_width + word_width;
+          w_index += 1;
         }
-        w_index += 1;
       }
       sentences.push(text.slice(start));
       return {

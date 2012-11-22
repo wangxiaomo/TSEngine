@@ -44,9 +44,19 @@ define 'common', ['jquery', 'utils', 'hyphen'], ($, utils, Hyphen)->
       status: -1
     }
 
+  handle_punctuation = (text, start)->
+    HOME_PUNCTUATION_CHECK = ',.，。:：!！>》、?？’”'
+    END_PUNCTUATION_CHECK = '“‘<《'
+    while HOME_PUNCTUATION_CHECK.indexOf(text[start]) != -1
+      start = start-1
+    while END_PUNCTUATION_CHECK.indexOf(text[start-1]) != -1
+      start = start-1
+    return start
+
   return {
     zhchar_width: zhchar_width
     enchar_width: enchar_width
     get_word_width: get_word_width
     handle_hyphen: handle_hyphen
+    handle_punctuation: handle_punctuation
   }
