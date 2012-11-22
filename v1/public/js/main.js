@@ -5,9 +5,14 @@
     baseUrl: "public/js"
   });
 
-  requirejs(['common'], function(common) {
-    console.log("Hello World");
-    return console.log(common);
+  requirejs(['jquery', 'parser', 'data'], function($, Parser, data) {
+    var ret;
+    ret = Parser.parse(data.text);
+    if (ret.status === 0) {
+      return $('body').html(ret.text);
+    } else {
+      return alert(ret.text);
+    }
   });
 
 }).call(this);
