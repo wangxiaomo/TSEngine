@@ -2,7 +2,7 @@
 (function() {
 
   define('common', ['jquery', 'utils', 'hyphen'], function($, utils, Hyphen) {
-    var enchar_str, enchar_width, get_word_width, handle_hyphen, hyphen, zhchar_width;
+    var enchar_str, enchar_width, get_word_width, handle_hyphen, handle_punctuation, hyphen, zhchar_width;
     hyphen = new Hyphen();
     zhchar_width = 16;
     enchar_width = Array();
@@ -48,11 +48,24 @@
         status: -1
       };
     };
+    handle_punctuation = function(text, start) {
+      var END_PUNCTUATION_CHECK, HOME_PUNCTUATION_CHECK;
+      HOME_PUNCTUATION_CHECK = ',.，。:：!！>》、?？’”';
+      END_PUNCTUATION_CHECK = '“‘<《';
+      while (HOME_PUNCTUATION_CHECK.indexOf(text[start]) !== -1) {
+        start = start - 1;
+      }
+      while (END_PUNCTUATION_CHECK.indexOf(text[start - 1]) !== -1) {
+        start = start - 1;
+      }
+      return start;
+    };
     return {
       zhchar_width: zhchar_width,
       enchar_width: enchar_width,
       get_word_width: get_word_width,
-      handle_hyphen: handle_hyphen
+      handle_hyphen: handle_hyphen,
+      handle_punctuation: handle_punctuation
     };
   });
 
