@@ -5,14 +5,17 @@
     baseUrl: "public/js"
   });
 
-  requirejs(['jquery', 'parser', 'data'], function($, Parser, data) {
+  requirejs(['jquery', 'parser', 'utils', 'data'], function($, Parser, utils, data) {
+    /*
     var ret;
     ret = Parser.parse(data.text);
     if (ret.status === 0) {
-      return $('body').html(ret.text);
+      return $('body').html(utils.render(ret.sentences));
     } else {
       return alert(ret.text);
     }
+    */
+    $('body').html('<p>'+data.text+'</p>');
   });
 
 }).call(this);

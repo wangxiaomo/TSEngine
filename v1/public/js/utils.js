@@ -2,7 +2,7 @@
 (function() {
 
   define('utils', ['jquery'], function($) {
-    var get_dom_width, is_enchar, preview_enchar_word;
+    var get_dom_width, is_enchar, preview_enchar_word, render;
     get_dom_width = function(word) {
       var p, r;
       p = document.createElement('p');
@@ -27,10 +27,18 @@
       }
       return word;
     };
+    render = function(sentences) {
+      var html_sentences;
+      html_sentences = $.map(sentences, function(sentence) {
+        return '<p class="sentence">' + sentence + '</p>';
+      });
+      return html_sentences.join('');
+    };
     return {
       get_dom_width: get_dom_width,
       is_enchar: is_enchar,
-      preview_enchar_word: preview_enchar_word
+      preview_enchar_word: preview_enchar_word,
+      render: render
     };
   });
 

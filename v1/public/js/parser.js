@@ -43,7 +43,8 @@
       sentences.push(text.slice(start));
       return {
         status: 0,
-        text: sentences.join('<br />')
+        text: sentences.join('<br />'),
+        sentences: sentences
       };
     };
     return {

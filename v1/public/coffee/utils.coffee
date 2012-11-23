@@ -19,8 +19,15 @@ define 'utils', ['jquery'], ($)->
       word += text[start++]
     return word
 
+  render = (sentences)->
+    html_sentences = $.map(sentences, (sentence)->
+      '<p class="sentence">'+sentence+'</p>'
+    )
+    return html_sentences.join('')
+
   return {
     get_dom_width: get_dom_width
     is_enchar: is_enchar
     preview_enchar_word: preview_enchar_word
+    render: render
   }

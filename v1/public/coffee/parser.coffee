@@ -35,6 +35,7 @@ define 'parser', ['common', 'hyphen'], (Common, Hyphen)->
     return {
       status: 0
       text: sentences.join('<br />')
+      sentences: sentences
     }
 
   return {
